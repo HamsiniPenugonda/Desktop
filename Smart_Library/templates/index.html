@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Library</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+
+            <h1>📚 Smart Library</h1>
+
+            <p>
+                Search books and check their availability
+            </p>
+
+        </header>
+
+
+        <div class="search-box">
+
+            <form method="GET">
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search }}"
+                    placeholder="Search book, author or category..."
+                >
+
+                <button type="submit">
+                    🔍 Search
+                </button>
+
+            </form>
+
+            <a href="/">
+                Show All Books
+            </a>
+
+        </div>
+
+
+        <div class="book-count">
+
+            {% if search %}
+
+                Search results for:
+                <strong>{{ search }}</strong>
+
+            {% else %}
+
+                All Library Books
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="books">
+
+            {% for book in books %}
+
+                <div class="book-card">
+
+                    <h2>
+                        {{ book["title"] }}
+                    </h2>
+
+                    <p>
+                        <strong>Author:</strong>
+                        {{ book["author"] }}
+                    </p>
+
+                    <p>
+                        <strong>Category:</strong>
+                        {{ book["category"] }}
+                    </p>
+
+                    <p>
+                        <strong>Available Copies:</strong>
+                        {{ book["copies"] }}
+                    </p>
+
+
+                    {% if book["copies"] > 0 %}
+
+                        <div class="available">
+                            ✅ Available
+                        </div>
+
+                    {% else %}
+
+                        <div class="not-available">
+                            ❌ Not Available
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            {% else %}
+
+                <div class="no-books">
+
+                    <h2>📚 No books found</h2>
+
+                    <p>
+                        Try searching with another book name.
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
